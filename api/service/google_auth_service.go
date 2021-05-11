@@ -8,6 +8,7 @@ import (
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
 	"net/http"
+	"oauthserver/api/presenter"
 	"oauthserver/pkg/entities"
 	"oauthserver/pkg/user"
 	"oauthserver/pkg/utils"
@@ -61,10 +62,10 @@ func GoogleCallback(userService user.Service) fiber.Handler {
 		token, err := oAuthGoogleConfig().Exchange(context.Background(), c.FormValue("code"))
 		if err != nil {
 			fmt.Print(err)
-			return c.SendString("Sorry, something went wrong ")
+			c.Status(http.StatusInternalServerError)
+			return  c.JSON(presenter.Failure(err))
 		}
 
-		fmt.Println(token.AccessToken)
 		resp, err := http.Get("https://www.googleapis.com/oauth2/v2/userinfo?access_token=" + token.AccessToken)
 		if err != nil {
 			return c.SendString("Cannot get your details bro")
@@ -74,6 +75,8 @@ func GoogleCallback(userService user.Service) fiber.Handler {
 		err = json.NewDecoder(resp.Body).Decode(&googleResponse)
 		if err != nil {
 			fmt.Println(err)
+			c.Status(http.StatusInternalServerError)
+			return  c.JSON(presenter.Failure(err))
 		}
 		var userData = entities.User{
 			Name:        googleResponse.GivenName + " " + googleResponse.FamilyName,
@@ -85,11 +88,15 @@ func GoogleCallback(userService user.Service) fiber.Handler {
 		signedInUser, err := userService.LoginUser(&userData)
 		if err != nil {
 			fmt.Println(err)
+			c.Status(http.StatusInternalServerError)
+			return  c.JSON(presenter.Failure(err))
 		}
 		jwtToken, err := signedInUser.GetSignedJWT()
 		if err != nil {
 			fmt.Println(err)
+			c.Status(http.StatusInternalServerError)
+			return  c.JSON(presenter.Failure(err))
 		}
-		return c.SendString(jwtToken)
+		return c.JSON(presenter.TokenResponse(jwtToken))
 	}
 }

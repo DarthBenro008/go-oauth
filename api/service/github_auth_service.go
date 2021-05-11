@@ -8,6 +8,7 @@ import (
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/github"
 	"net/http"
+	"oauthserver/api/presenter"
 	"oauthserver/pkg/entities"
 	"oauthserver/pkg/user"
 	"oauthserver/pkg/utils"
@@ -63,20 +64,23 @@ func GithubCallback(userService user.Service) fiber.Handler {
 		token, err := oAuthGitHubConfig().Exchange(context.Background(), c.FormValue("code"))
 		if err != nil {
 			fmt.Print(err)
-			return c.SendString("Sorry, something went wrong in fetching code")
+			c.Status(http.StatusInternalServerError)
+			return  c.JSON(presenter.Failure(err))
 		}
 
 		client := &http.Client{}
 		req, err := http.NewRequest("GET", "https://api.github.com/user", nil)
 		if err != nil {
 			fmt.Println(err)
-			return c.Redirect("/", http.StatusTemporaryRedirect)
+			c.Status(http.StatusInternalServerError)
+			return  c.JSON(presenter.Failure(err))
 		}
 		req.Header.Set("Authorization", "token "+token.AccessToken)
 		resp, err := client.Do(req)
 		if err != nil {
 			fmt.Println(err)
-			return c.Redirect("/", http.StatusTemporaryRedirect)
+			c.Status(http.StatusInternalServerError)
+			return  c.JSON(presenter.Failure(err))
 		}
 		githubResponse := GitHubResponseStruct{}
 		err = json.NewDecoder(resp.Body).Decode(&githubResponse)
@@ -88,13 +92,15 @@ func GithubCallback(userService user.Service) fiber.Handler {
 			req, err := http.NewRequest("GET", "https://api.github.com/user/emails", nil)
 			if err != nil {
 				fmt.Println(err)
-				return c.Redirect("/", http.StatusTemporaryRedirect)
+				c.Status(http.StatusInternalServerError)
+				return  c.JSON(presenter.Failure(err))
 			}
 			req.Header.Set("Authorization", "token "+token.AccessToken)
 			resp, err := client.Do(req)
 			if err != nil {
 				fmt.Println(err)
-				return c.Redirect("/", http.StatusTemporaryRedirect)
+				c.Status(http.StatusInternalServerError)
+				return  c.JSON(presenter.Failure(err))
 			}
 			err = json.NewDecoder(resp.Body).Decode(&gitHubEmails)
 			if err != nil {
@@ -112,12 +118,16 @@ func GithubCallback(userService user.Service) fiber.Handler {
 		signedInUser, err := userService.LoginUser(&userData)
 		if err != nil {
 			fmt.Println(err)
+			c.Status(http.StatusInternalServerError)
+			return  c.JSON(presenter.Failure(err))
 		}
 		jwtToken, err := signedInUser.GetSignedJWT()
 		if err != nil {
 			fmt.Println(err)
+			c.Status(http.StatusInternalServerError)
+			return  c.JSON(presenter.Failure(err))
 		}
-		return c.SendString(jwtToken)
+		return c.JSON(presenter.TokenResponse(jwtToken))
 	}
 
 }
