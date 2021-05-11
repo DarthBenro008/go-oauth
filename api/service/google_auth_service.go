@@ -29,7 +29,7 @@ type googleAuthResponse struct {
 	Locale        string `json:"locale"`
 }
 
-func oAuthConfig() *oauth2.Config {
+func oAuthGoogleConfig() *oauth2.Config {
 	return &oauth2.Config{
 		RedirectURL:  "http://localhost:3000/auth/google/callback",
 		ClientID:     os.Getenv("GOOGLE_OAUTH_CLIENT_ID"),
@@ -48,7 +48,7 @@ func GoogleLogin() fiber.Handler {
 			fmt.Println(err)
 			return c.SendString("Some error has occurred.")
 		}
-		url := oAuthConfig().AuthCodeURL(state)
+		url := oAuthGoogleConfig().AuthCodeURL(state)
 		return c.Redirect(url, http.StatusTemporaryRedirect)
 	}
 }
@@ -58,7 +58,7 @@ func GoogleCallback(userService user.Service) fiber.Handler {
 		if c.FormValue("state") != state {
 			return c.Redirect("/", http.StatusTemporaryRedirect)
 		}
-		token, err := oAuthConfig().Exchange(context.Background(), c.FormValue("code"))
+		token, err := oAuthGoogleConfig().Exchange(context.Background(), c.FormValue("code"))
 		if err != nil {
 			fmt.Print(err)
 			return c.SendString("Sorry, something went wrong ")
