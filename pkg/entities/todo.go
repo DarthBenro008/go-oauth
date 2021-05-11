@@ -12,7 +12,7 @@ type Todo struct {
 	Done        bool               `json:"done"`
 	CreatedAt   int64              `json:"createdAt"`
 	UpdatedAt   int64              `json:"updatedAt"`
-	User        string             `json:"user"`
+	User        primitive.ObjectID `json:"user"`
 }
 
 func (todo *Todo) SetCreatedAt() {
@@ -20,23 +20,6 @@ func (todo *Todo) SetCreatedAt() {
 }
 
 func (todo *Todo) SetUpdatedAt() {
-	todo.UpdatedAt = time.Now().Unix()
-}
-
-type NewTodo struct {
-	Title       string `json:"title"`
-	Description string `json:"description"`
-	Done        bool   `json:"done"`
-	CreatedAt   int64  `json:"createdAt"`
-	UpdatedAt   int64  `json:"updatedAt"`
-	User        string `json:"user"`
-}
-
-func (todo *NewTodo) SetCreatedAt() {
-	todo.CreatedAt = time.Now().Unix()
-}
-
-func (todo *NewTodo) SetUpdatedAt() {
 	todo.UpdatedAt = time.Now().Unix()
 }
 

@@ -13,6 +13,7 @@ import (
 	"log"
 	"oauthserver/api/routes"
 	"oauthserver/pkg/todo"
+	"oauthserver/pkg/user"
 	"os"
 	"time"
 )
@@ -33,17 +34,23 @@ func main() {
 	todoRepo := todo.NewRepo(todoCollection)
 	todoService := todo.NewService(todoRepo)
 
+	userCollection := db.Collection("users")
+	userRepo := user.NewRepo(userCollection)
+	userService := user.NewService(userRepo)
+
 	engine := html.New("./views", ".html")
 	app := fiber.New(fiber.Config{Views: engine})
 	app.Use(cors.New())
-	app.Use(jwtware.New(jwtware.Config{
-		SigningKey: []byte(os.Getenv("JWT_SECRET")),
-	}))
+
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.Render("index", fiber.Map{})
 	})
 	auth := app.Group("/auth")
-	routes.AuthRouter(auth)
+	routes.AuthRouter(auth, userService)
+
+	app.Use(jwtware.New(jwtware.Config{
+		SigningKey: []byte(os.Getenv("JWT_SECRET")),
+	}))
 
 	todos := app.Group("/api")
 	routes.TodoRouter(todos, todoService)
@@ -53,7 +60,7 @@ func main() {
 
 func DatabaseConnection() (*mongo.Database, error) {
 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
-	client, err := mongo.Connect(ctx, options.Client().ApplyURI("mongodb://root:toor@localhost:27017/litmusTask"))
+	client, err := mongo.Connect(ctx, options.Client().ApplyURI("mongodb://localhost:27017/litmusTask"))
 	if err != nil {
 		return nil, err
 	}

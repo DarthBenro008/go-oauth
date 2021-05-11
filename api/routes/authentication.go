@@ -3,9 +3,10 @@ package routes
 import (
 	"github.com/gofiber/fiber/v2"
 	"oauthserver/api/service"
+	"oauthserver/pkg/user"
 )
 
-func AuthRouter(app fiber.Router) {
+func AuthRouter(app fiber.Router, userService user.Service) {
 	app.Get("/google/login", service.GoogleLogin())
-	app.Get("/google/callback", service.GoogleCallback())
+	app.Get("/google/callback", service.GoogleCallback(userService))
 }

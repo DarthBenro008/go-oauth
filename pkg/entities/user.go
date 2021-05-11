@@ -13,15 +13,17 @@ type User struct {
 	Name        string             `json:"name"`
 	Email       string             `json:"email"`
 	AccessToken string             `json:"accessToken"`
+	Social      string             `json:"social"`
+	Picture     string             `json:"picture"`
 }
 
-func (user *User) GetSignedJWT(id string) (string, error) {
+func (user *User) GetSignedJWT() (string, error) {
 
 	token := jwt.New(jwt.SigningMethodHS256)
 
 	claims := token.Claims.(jwt.MapClaims)
 
-	claims["id"] = id
+	claims["id"] = user.ID.Hex()
 	claims["exp"] = time.Now().Add(time.Minute * 300).Unix()
 
 	tokenString, err := token.SignedString([]byte(os.Getenv("JWT_SECRET")))

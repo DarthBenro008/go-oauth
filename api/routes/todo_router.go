@@ -2,8 +2,9 @@ package routes
 
 import (
 	"fmt"
-	"github.com/dgrijalva/jwt-go"
+	jwt "github.com/form3tech-oss/jwt-go"
 	"github.com/gofiber/fiber/v2"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"oauthserver/pkg/entities"
 	"oauthserver/pkg/todo"
 )
@@ -18,8 +19,6 @@ func TodoRouter(app fiber.Router, service todo.Service) {
 func addTodo(service todo.Service) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		var requestBody entities.Todo
-		requestBody.SetCreatedAt()
-		requestBody.SetUpdatedAt()
 		err := c.BodyParser(&requestBody)
 		if err != nil {
 			_ = c.JSON(&fiber.Map{
@@ -27,6 +26,12 @@ func addTodo(service todo.Service) fiber.Handler {
 				"error":   err,
 			})
 		}
+		requestBody.SetCreatedAt()
+		requestBody.SetUpdatedAt()
+		user := c.Locals("user").(*jwt.Token)
+		claims := user.Claims.(jwt.MapClaims)
+		id := claims["id"].(string)
+		requestBody.User, _ = primitive.ObjectIDFromHex(id)
 		result, dberr := service.InsertTodo(&requestBody)
 		return c.JSON(&fiber.Map{
 			"status": result,
@@ -45,6 +50,11 @@ func updateTodo(service todo.Service) fiber.Handler {
 				"error":   err,
 			})
 		}
+		requestBody.SetUpdatedAt()
+		user := c.Locals("user").(*jwt.Token)
+		claims := user.Claims.(jwt.MapClaims)
+		id := claims["id"].(string)
+		requestBody.User, _ = primitive.ObjectIDFromHex(id)
 		result, dberr := service.UpdateTodo(&requestBody)
 		return c.JSON(&fiber.Map{
 			"status": result,

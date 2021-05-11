@@ -2,6 +2,7 @@ package todo
 
 import (
 	"context"
+	"fmt"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -22,6 +23,7 @@ func (r repository) CreateTodo(todo *entities.Todo) (*entities.Todo, error) {
 	todo.ID = primitive.NewObjectID()
 	_, err := r.Collection.InsertOne(context.Background(), todo)
 	if err != nil {
+		fmt.Println(err)
 		return nil, err
 	}
 	return todo, nil
@@ -29,8 +31,9 @@ func (r repository) CreateTodo(todo *entities.Todo) (*entities.Todo, error) {
 
 func (r repository) ReadTodo(userId string) (*[]entities.Todo, error) {
 	var Todos []entities.Todo
+	userIdHex, _ := primitive.ObjectIDFromHex(userId)
 	cursor, err := r.Collection.Find(context.Background(), bson.M{
-		"user": userId,
+		"user": userIdHex,
 	})
 	if err != nil {
 		return nil, err
