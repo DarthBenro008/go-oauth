@@ -15,7 +15,7 @@ func Success(data interface{}, description interface{}) *fiber.Map {
 
 func Failure(description interface{}) *fiber.Map {
 	return &fiber.Map{
-		"status":      true,
+		"status":      false,
 		"data":        nil,
 		"description": description,
 	}

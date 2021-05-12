@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Go Oauth</title>
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0"
+            crossorigin="anonymous"
+    />
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+            rel="shortcut icon"
+            type="image/jpg"
+            href="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Go_gopher_favicon.svg/1024px-Go_gopher_favicon.svg.png"
+    />
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"
+    ></script>
+    <style>
+        body,
+        html {
+            height: 100%;
+        }
+
+        .fa {
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body class="bg-dark h-100">
+<div class="container-fluid h-100">
+    <div class="row justify-content-center align-items-center h-100">
+        <div class="col col-sm-6 col-md-6 col-lg-4 col-xl-3">
+            <div class="row align-items-center justify-content-center text-white">
+                <p class="text-center text-info">Welcome to TODO Tasks</p>
+                <br/>
+                <p class="text-center mt-2">
+                    Please generate your token by logging in and refer to the postman
+                    documentation for accessing the API
+                </p>
+            </div>
+            <div class="row align-items-center justify-content-center mt-5 mx-2">
+                <a
+                        id="github-button"
+                        class="btn btn-block btn-social btn-github bg-white"
+                        href="/auth/github/login"
+                >
+                    <i class="fa fa-github"></i> Sign in with GitHub
+                </a>
+            </div>
+            <div class="row align-items-center justify-content-center pt-4 mx-2">
+                <a
+                        class="btn btn-google btn-social btn-block btn-outline bg-white"
+                        href="/auth/google/login"
+                ><img
+                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"
+                            height="20"
+                    />
+                    Sign in with Google</a
+                >
+            </div>
+            <div class="row align-items-center justify-content-center pt-4 mx-2">
+                <a
+                        class="btn btn-google btn-social btn-block btn-outline bg-white"
+                        href="https://documenter.getpostman.com/view/12292853/TzRUAmao#intro"
+                ><img
+                            src="https://cdn.svgporn.com/logos/postman.svg"
+                            height="20"
+                    />
+                    Postman Documentation</a
+                >
+            </div>
+
+            <div
+                    class="
+              row
+              align-items-center
+              justify-content-center
+              text-white
+              mt-5
+              mx-md-5 mx-2
+            "
+            >
+                <a
+                        id="github-button"
+                        class="btn btn-block btn-social btn-github bg-white"
+                        href="https://github.com/DarthBenro008/go-oauth"
+                >
+                    <i class="fa fa-github-alt"></i> View Source Code
+                </a>
+            </div>
+            <div
+                    class="
+              row
+              align-items-center
+              justify-content-center
+              text-white
+              mt-5
+            "
+            >
+                <p class="text-center">
+                    Developed by
+                    <a href="https://github.com/DarthBenro008"
+                    >Hemanth Krishna (@DarthBenro008)</a
+                    >
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -33,7 +33,10 @@ func addTodo(service todo.Service) fiber.Handler {
 		id := claims["id"].(string)
 		requestBody.User, _ = primitive.ObjectIDFromHex(id)
 		result, dberr := service.InsertTodo(&requestBody)
-		return c.JSON(presenter.Success(result, dberr))
+		if dberr != nil{
+			return c.JSON(presenter.Failure(dberr))
+		}
+		return c.JSON(presenter.Success(result, "Successfully added Todo"))
 	}
 }
 
@@ -57,16 +60,10 @@ func updateTodo(service todo.Service) fiber.Handler {
 
 func removeTodo(service todo.Service) fiber.Handler {
 	return func(c *fiber.Ctx) error {
-		var requestBody entities.DeleteRequest
-		err := c.BodyParser(&requestBody)
-		TodoID := requestBody.ID
-		if err != nil {
-			c.Status(http.StatusInternalServerError)
-			return c.JSON(presenter.Failure(err))
-		}
+		TodoID := c.FormValue("_id")
 		dberr := service.RemoveTodo(TodoID)
 		if dberr != nil {
-			_ = c.JSON(presenter.Failure(err))
+			_ = c.JSON(presenter.Failure(dberr))
 		}
 		return c.JSON(presenter.Success("Removed Successfully", dberr))
 	}

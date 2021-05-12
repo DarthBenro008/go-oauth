@@ -6,11 +6,11 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	jwtware "github.com/gofiber/jwt/v2"
+	"github.com/gofiber/template/html"
 	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"log"
-	"oauthserver/api/presenter"
 	"oauthserver/api/routes"
 	"oauthserver/pkg/todo"
 	"oauthserver/pkg/user"
@@ -38,12 +38,14 @@ func main() {
 	userRepo := user.NewRepo(userCollection)
 	userService := user.NewService(userRepo)
 
-
-	app := fiber.New()
+	engine := html.New("./views", ".html")
+	app := fiber.New(fiber.Config{
+		Views: engine,
+	})
 	app.Use(cors.New())
 
 	app.Get("/", func(c *fiber.Ctx) error {
-		return c.JSON(presenter.Success("The Litmus Task API is running", "Author: Hemanth Krishna [@DarthBenro008]"))
+		return c.Render("index", &fiber.Map{})
 	})
 	auth := app.Group("/auth")
 	routes.AuthRouter(auth, userService)
