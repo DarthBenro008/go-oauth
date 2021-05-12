@@ -21,9 +21,10 @@ func Failure(description interface{}) *fiber.Map {
 	}
 }
 
-func TokenResponse(token string) *fiber.Map {
+func TokenResponse(token string, data interface{}) *fiber.Map {
 	return &fiber.Map{
 		"status": true,
 		"token":  token,
+		"data": data,
 	}
 }

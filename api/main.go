@@ -56,6 +56,7 @@ func main() {
 
 	todos := app.Group("/api")
 	routes.TodoRouter(todos, todoService)
+	routes.UserRouter(todos, userService)
 
 	_ = app.Listen(":3000")
 }

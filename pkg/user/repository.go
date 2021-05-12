@@ -2,6 +2,7 @@ package user
 
 import (
 	"context"
+	"fmt"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -10,9 +11,24 @@ import (
 
 type Repository interface {
 	LoginUser(user *entities.User) (*entities.User, error)
+	GetUser(userId string) (*entities.User, error)
 }
 type repository struct {
 	Collection *mongo.Collection
+}
+
+func (r repository) GetUser(userId string) (*entities.User, error) {
+	userIdHex, _ := primitive.ObjectIDFromHex(userId)
+	var result = entities.User{}
+	findOneErr := r.Collection.FindOne(context.TODO(), bson.M{
+		"_id":  userIdHex,
+	}).Decode(&result)
+	result.AccessToken = ""
+	if findOneErr != nil {
+		fmt.Println(findOneErr)
+		return nil, findOneErr
+	}
+	return &result, nil
 }
 
 func (r repository) LoginUser(user *entities.User) (*entities.User, error) {

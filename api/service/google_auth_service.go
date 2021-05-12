@@ -97,6 +97,7 @@ func GoogleCallback(userService user.Service) fiber.Handler {
 			c.Status(http.StatusInternalServerError)
 			return  c.JSON(presenter.Failure(err))
 		}
-		return c.JSON(presenter.TokenResponse(jwtToken))
+		userData.AccessToken = ""
+		return c.JSON(presenter.TokenResponse(jwtToken, userData))
 	}
 }
