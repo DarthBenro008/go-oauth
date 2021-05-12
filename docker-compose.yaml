@@ -1,0 +1,16 @@
+version: '3.7'
+services:
+  api:
+    container_name: 'api'
+    build: .
+    ports:
+      - '3000:3000'
+    depends_on:
+      - 'mongo'
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/litmusTask
+  mongo:
+    image: 'mongo:latest'
+    container_name: 'mongo'
+    ports:
+      - '27017:27017'

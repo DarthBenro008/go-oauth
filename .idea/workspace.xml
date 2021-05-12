@@ -2,12 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="464a64de-4053-44e7-8267-0b28902887a4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/views/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-compose.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/presenter/rest.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/presenter/rest.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/routes/todo_router.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/routes/todo_router.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +52,7 @@
       <recent name="D:\Go\src\litmusTask\api" />
     </key>
   </component>
-  <component name="RunManager" selected="Go Build.go build oauthserver/api">
+  <component name="RunManager" selected="Docker.docker-compose.yaml.api: Compose Deployment">
     <configuration name="go build oauthserver" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="litmusTask" />
       <working_directory value="$PROJECT_DIR$" />
@@ -73,8 +71,46 @@
       <directory value="$PROJECT_DIR$" />
       <method v="2" />
     </configuration>
+    <configuration name="Dockerfile" type="docker-deploy" factoryName="dockerfile" temporary="true" server-name="Docker">
+      <deployment type="dockerfile">
+        <settings>
+          <option name="imageTag" value="" />
+          <option name="buildCliOptions" value="" />
+          <option name="command" value="" />
+          <option name="containerName" value="" />
+          <option name="entrypoint" value="" />
+          <option name="commandLineOptions" value="" />
+          <option name="sourceFilePath" value="Dockerfile" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yaml: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="sourceFilePath" value="docker-compose.yaml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yaml.api: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="api" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yaml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Docker.docker-compose.yaml: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.yaml.api: Compose Deployment" />
+        <item itemvalue="Docker.Dockerfile" />
         <item itemvalue="Go Build.go build oauthserver/api" />
         <item itemvalue="Go Build.go build oauthserver" />
       </list>
@@ -106,25 +142,25 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1620731465314" />
-    <state width="1877" height="276" key="GridCell.Tab.0.bottom" timestamp="1620795958103">
+    <state width="1877" height="276" key="GridCell.Tab.0.bottom" timestamp="1620798316240">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="276" key="GridCell.Tab.0.bottom/1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1620795958103" />
+    <state width="1877" height="276" key="GridCell.Tab.0.bottom/1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1620798316240" />
     <state width="1878" height="281" key="GridCell.Tab.0.bottom/1920.136.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1620729844799" />
-    <state width="1877" height="276" key="GridCell.Tab.0.center" timestamp="1620795958102">
+    <state width="1877" height="276" key="GridCell.Tab.0.center" timestamp="1620798316239">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="276" key="GridCell.Tab.0.center/1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1620795958102" />
+    <state width="1877" height="276" key="GridCell.Tab.0.center/1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1620798316239" />
     <state width="1878" height="281" key="GridCell.Tab.0.center/1920.136.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1620729844798" />
-    <state width="1877" height="276" key="GridCell.Tab.0.left" timestamp="1620795958102">
+    <state width="1877" height="276" key="GridCell.Tab.0.left" timestamp="1620798316239">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="276" key="GridCell.Tab.0.left/1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1620795958102" />
+    <state width="1877" height="276" key="GridCell.Tab.0.left/1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1620798316239" />
     <state width="1878" height="281" key="GridCell.Tab.0.left/1920.136.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1620729844798" />
-    <state width="1877" height="276" key="GridCell.Tab.0.right" timestamp="1620795958102">
+    <state width="1877" height="276" key="GridCell.Tab.0.right" timestamp="1620798316239">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="276" key="GridCell.Tab.0.right/1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1620795958102" />
+    <state width="1877" height="276" key="GridCell.Tab.0.right/1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1620798316239" />
     <state width="1878" height="281" key="GridCell.Tab.0.right/1920.136.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1620729844799" />
     <state x="725" y="275" key="com.goide.refactor.move.GoMoveDeclarationDialog" timestamp="1620761176391">
       <screen x="0" y="0" width="1920" height="1040" />
